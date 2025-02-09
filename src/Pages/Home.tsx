@@ -1,10 +1,11 @@
 import Navbar from "../Components/Navbar";
-import DragAndDropBox from "../Components/DragAndDropBox";
+import ImageDetails from "../Components/ImageDetails";
+
 const Home = () => {
   return (
     <div>
-      <Navbar></Navbar>
-      <DragAndDropBox></DragAndDropBox>
+      <Navbar />
+      <ImageDetails />
     </div>
   );
 };
