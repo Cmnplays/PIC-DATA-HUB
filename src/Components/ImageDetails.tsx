@@ -28,7 +28,7 @@ const ImageDetails = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const imageFile = e.target.files?.[0] ?? null;
-    if (!imageFile) {
+    if (!imageFile?.type.startsWith("image")) {
       showErrorMessage("No image file found");
       return;
     }
@@ -61,11 +61,13 @@ const ImageDetails = () => {
     }
   };
 
+  // File Upload Section with Image Preview
   return (
     <div className="w-full p-6 flex flex-col items-center">
       <label
         htmlFor="image"
-        className="w-full max-w-2xl sm:h-48 md:h-56 lg:h-64 p-6 flex justify-center items-center text-gray-600 border-4 border-dashed border-gray-400 rounded-xl hover:border-blue-500 cursor-pointer transition-all bg-gray-50 hover:bg-gray-100"
+        className="w-full max-w-2xl p-6 flex justify-center items-center text-gray-600 border-4 border-dashed border-gray-400 rounded-xl hover:border-blue-500 cursor-pointer transition-all bg-gray-50 hover:bg-gray-100"
+        style={{ maxHeight: "250px", overflow: "hidden" }} // Adjust max-height for smaller screens
       >
         {!imagePreview ? (
           <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center">
@@ -78,6 +80,7 @@ const ImageDetails = () => {
             src={imagePreview}
             alt="Selected image preview"
             className="w-full h-full object-cover rounded-xl transition-all"
+            style={{ maxHeight: "200px" }} // Ensure image doesn't overflow
           />
         ) : null}
       </label>
