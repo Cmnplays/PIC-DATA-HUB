@@ -3,24 +3,24 @@ import ImageDetailsContainer from "../Components/ImageDetailsContainer";
 import { toast } from "react-toastify";
 import getImageDetails from "../utils/getImageDetails";
 import { imageDataTypes } from "../utils/getImageDetails";
+import { Image as imageFileType } from "../utils/getImageDetails";
+
 const ImageDetails = () => {
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<null | imageFileType>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [display, setDisplay] = useState<boolean>(false);
   const [imageData, setImageData] = useState<imageDataTypes>({
     fileName: "",
     dimensions: "",
-    fileSize: 0,
-    dateCreated: 0,
+    fileSize: "",
+    dateCreated: "",
     fileType: "",
-    dateModified: 0,
+    dateModified: "",
     resolution: "",
-    exifData: {},
     cameraModel: "",
     lens: "",
     location: "",
   });
-  // const [errorMsg, setErrorMsg] = useState<string>("");
 
   const showErrorMessage = (message: string): void => {
     toast.error(message);
@@ -30,17 +30,34 @@ const ImageDetails = () => {
     const imageFile = e.target.files?.[0] ?? null;
     if (!imageFile) {
       showErrorMessage("No image file found");
+      return;
     }
     const imagePreviewUrl = URL.createObjectURL(imageFile as Blob);
-    setImagePreview(imagePreviewUrl);
-    setImage(imageFile);
+    const image = new Image();
+    image.src = imagePreviewUrl;
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      const imageData = {
+        actualFile: imageFile,
+        width,
+        height,
+      };
+      setImage(imageData);
+      setImagePreview(imagePreviewUrl);
+    };
   };
 
-  const showImageDetails = () => {
-    if (image) {
-      console.log(image);
-      getImageDetails(image);
+  const showImageDetails = async () => {
+    if (!image) {
+      return;
+    }
+    try {
+      const imageData = await getImageDetails(image);
+      setImageData(imageData);
       setDisplay(true);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -75,11 +92,15 @@ const ImageDetails = () => {
       <input
         value="Submit"
         className="mt-4 py-2 px-6 text-white bg-blue-500 hover:bg-blue-600 rounded-lg cursor-pointer transition-all max-w-xl sm:max-w-lg md:max-w-md lg:max-w-sm w-full text-base sm:text-lg md:text-xl lg:text-2xl text-center"
-        onClick={showImageDetails}
+        type="submit"
+        onClick={() => {
+          showImageDetails().catch((err) => {
+            console.log(err);
+          });
+        }}
       />
-      <ImageDetailsContainer display={display} />
+      <ImageDetailsContainer imageData={imageData} display={display} />
     </div>
   );
 };
-
 export default ImageDetails;
