@@ -8,7 +8,7 @@ const ImageDetailsContainer = ({
   imageData: imageDataTypes;
 }) => {
   return display ? (
-    <div className="w-full max-w-2xl mx-auto p-8 bg-white rounded-3xl shadow-xl border border-gray-100 mt-6 transition-all ease-in-out hover:scale-105 sm:w-full sm:p-4 sm:mt-4">
+    <div className="w-full max-w-2xl p-8 bg-white rounded-3xl shadow-xl border border-gray-100 mt-6 transition-all ease-in-out hover:scale-105 sm:w-full sm:p-4 sm:mt-4">
       <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center sm:text-2xl sm:mb-4">
         Image Details
       </h2>
