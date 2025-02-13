@@ -86,7 +86,7 @@ const ImageDetails = () => {
       </label>
       <input
         type="file"
-        accept="image/*"
+        accept=".jpg,.jpeg,.png,.webp"
         name="image"
         id="image"
         className="hidden"
