@@ -80,12 +80,12 @@ const ImageDetails = () => {
             src={imagePreview}
             alt="Selected image preview"
             className="w-full h-full object-cover rounded-xl transition-all"
-            style={{ maxHeight: "200px" }} // Ensure image doesn't overflow
+            style={{ maxHeight: "200px" }}
           />
         ) : null}
       </label>
       <input
-        type="image"
+        type="file"
         accept="image/*"
         name="image"
         id="image"

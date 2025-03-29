@@ -45,7 +45,7 @@ interface Address {
 export interface LocationData {
   address: Address;
   addresstype: string;
-  boundingbox: [string, string, string, string]; // Array with 4 string values
+  boundingbox: [string, string, string, string];
   class: string;
   display_name: string;
   importance: number;
